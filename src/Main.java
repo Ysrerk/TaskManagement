@@ -32,17 +32,20 @@ public class Main {
                     "3-To list Tasks"+
                     "4-To list Timed Tasks"+
                     "5-To Assign task"+
-                    "6-To list  assigned task");
+                    "6-To list  assigned task"+
+                    "7-Assigned timed task"+
+                    "8- To list assigned timed task");
             int processid= read.nextInt();
             if (processid==0){
 
                 break;
             }
             else if(processid==1){
+                read.nextLine();
                 System.out.println("please enter task id");
-                int id= read.nextInt();
+                int id=Integer.valueOf(read.nextLine());
                 System.out.println("please add task name");
-                String name= read.next();
+                String name= read.nextLine();
 
                 System.out.println("please add task due date like this format  (yyyy-MM-dd)");
                 String duedate=read.next();
@@ -51,6 +54,7 @@ public class Main {
                 //LocalDateTime aLD = LocalDateTime.parse(duedate);
                 //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                 LocalDateTime dueDate = LocalDateTime.parse(duedate);
+
                 Task.addtask(id,name,dueDate);
 
 
@@ -128,8 +132,48 @@ public class Main {
 
                 for (List<Object> aslist:listofassignedtasklist){
 
-                    System.out.println(" ASSIGNED TASK LIST "+"TASK ID:"+aslist.get(0)+"  TASK DETAILS:"+aslist.get(1)+"  TASK DUE DATE:"+aslist.get(2)+"TASK STATUS:"+ aslist.get(3)+"   TASK ASSIGNED TO:"+aslist.get(4));
+                    System.out.println(" ASSIGNED TASK LIST "+"TASK ID:"+aslist.get(0)+"  TASK DETAILS:"+aslist.get(1)+
+                            "  TASK DUE DATE:"+aslist.get(2)+"TASK STATUS:"+
+                            aslist.get(3)+"   TASK ASSIGNED TO:"+aslist.get(4));
                 }
+            }
+
+            else if(processid==7){
+
+                System.out.println("which task do you want to  bugget task");
+                int id=read.nextInt();
+                System.out.println("please add task startdate like this format  (yyyy-MM-dd)");
+                String startdate=read.next();
+                startdate+="T12:00:00";
+
+                LocalDateTime starDate = LocalDateTime.parse(startdate);
+                System.out.println("please add task finishdate like this format  (yyyy-MM-dd)");
+                String finishdate=read.next();
+                finishdate+="T12:00:00";
+
+                LocalDateTime endDate = LocalDateTime.parse(finishdate);
+
+                System.out.println("what isthe budget of  project");
+                int budget= read.nextInt();
+
+                for(List<Object> blist:listofassignedtasklist){
+                    if (blist.contains(id)){
+                        AssignedTimedTask.tobudgetthetask(blist,starDate,endDate,budget);
+                    }
+
+                }
+            }
+            else if (processid==8){
+
+                for (List<Object> bdlist:Database.listofbudgettasklist){
+
+                    System.out.println(bdlist);
+
+                   System.out.println("Budget list"+"task id"+ bdlist.get(0)+"task details:"+bdlist.get(1)+
+                           "task due date"+bdlist.get(2)+"task status"+bdlist.get(3)+"task assigned to"+bdlist.get(4)+
+                           "start date"+bdlist.get(5)+"end date"+bdlist.get(6)+"budget"+bdlist.get(7));
+                }
+
             }
 
 
