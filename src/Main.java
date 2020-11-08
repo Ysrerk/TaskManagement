@@ -6,17 +6,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.MatchResult;
+import java.util.stream.Collectors;
 
 public class Main {
-     static List<List<Object>> listofaddedtasklist =new ArrayList<>();
-     static List<List<Object>> listofaddedtimedtasklist =new ArrayList<>();
-     static List<List<Object>> listofassignedtasklist=new ArrayList<>();
+
+
+
     public static void main(String[] args) {
         interactionwithuser();
        //Task.addtask(1,"write a code", LocalDateTime.now());
        //Task.addtask(2,"complete code", LocalDateTime.now());
 
-        System.out.println(listofaddedtasklist);
+        System.out.println(Database.listofaddedtasklist);
 
     }
 
@@ -34,7 +35,10 @@ public class Main {
                     "5-To Assign task"+
                     "6-To list  assigned task"+
                     "7-Assigned timed task"+
-                    "8- To list assigned timed task");
+                    "8- To list assigned timed task"+
+                    "9-Sort Task according to Name"+
+                    "10-Sort Task according to Date"+
+                    "11-Delete Task");
             int processid= read.nextInt();
             if (processid==0){
 
@@ -73,11 +77,11 @@ public class Main {
 
                 LocalDateTime endDate = LocalDateTime.parse(finishdate);
                 // id that is  was got from user  is  searching  in the list of task
-                for (List<Object> timedtask:listofaddedtasklist){
+                for (List<Object> timedtask:Database.listofaddedtasklist){
                     ArrayList<Object>timedtaskc=(ArrayList<Object>) timedtask;
 
                     if(timedtaskc.contains(timedtaskid)){
-                        int ind=listofaddedtasklist.indexOf(timedtaskc);
+                        int ind=Database.listofaddedtasklist.indexOf(timedtaskc);
                         Timedtask.addtimedtasklist(timedtaskc,starDate,endDate);
 
                         //************************Buna bir bakmam lazim **********************************************
@@ -89,7 +93,7 @@ public class Main {
             }
             else if (processid==3){
 
-                for(List<Object> tlist:listofaddedtasklist){
+                for(List<Object> tlist:Database.listofaddedtasklist){
 
 
                     System.out.println("Task id:"+tlist.get(0)+"Task  details:"+tlist.get(1)+"Task Due Date:"
@@ -101,7 +105,7 @@ public class Main {
 
             else if(processid==4){
                 //ttlist is meaning timed task
-                for(List<Object>ttlist:listofaddedtimedtasklist){
+                for(List<Object>ttlist:Database.listofaddedtimedtasklist){
 
                     System.out.println("Task id:"+ttlist.get(0)+"Task  details:"+ttlist.get(1)+"Task Due Date:"
                             +ttlist.get(2)+"Task Status:"+ttlist.get(3)+"Task start date:"+ttlist.get(4)+"Task end date:"
@@ -118,7 +122,7 @@ public class Main {
                 System.out.println("Who do you want to assign?");
                 String assignto=read.next();
 
-                for(List<Object>astask:listofaddedtasklist){
+                for(List<Object>astask:Database.listofaddedtasklist){
 
                    if(astask.contains(assignedid)){
 
@@ -130,7 +134,7 @@ public class Main {
 
             else if (processid==6){
 
-                for (List<Object> aslist:listofassignedtasklist){
+                for (List<Object> aslist:Database.listofassignedtasklist){
 
                     System.out.println(" ASSIGNED TASK LIST "+"TASK ID:"+aslist.get(0)+"  TASK DETAILS:"+aslist.get(1)+
                             "  TASK DUE DATE:"+aslist.get(2)+"TASK STATUS:"+
@@ -156,7 +160,7 @@ public class Main {
                 System.out.println("what isthe budget of  project");
                 int budget= read.nextInt();
 
-                for(List<Object> blist:listofassignedtasklist){
+                for(List<Object> blist:Database.listofassignedtasklist){
                     if (blist.contains(id)){
                         AssignedTimedTask.tobudgetthetask(blist,starDate,endDate,budget);
                     }
@@ -175,6 +179,43 @@ public class Main {
                 }
 
             }
+
+            else if(processid==9){
+
+                List<Object> result = Database.listofaddedtasklist.stream().sorted((o1, o2)->o1.get(1).toString().compareTo(o2.get(1).toString())).collect(Collectors.toList());
+                System.out.println("Tasks sorted  according to name :");
+
+                for (Object task:result){
+                    System.out.println(task);
+                }
+
+            }
+
+            else if(processid==10){
+
+                System.out.println("Tasks sorted according to date");
+
+                List<Object> result = Database.listofaddedtasklist.stream().sorted((o1, o2)->o1.get(2).toString().compareTo(o2.get(2).toString())).collect(Collectors.toList());
+
+                System.out.println(result);
+            }
+            else if(processid==11){
+                System.out.println("which task do you want to delete ");
+                int id=read.nextInt();
+
+
+                for(List<Object> task:Database.listofaddedtasklist){
+
+                    if(task.contains(id)){
+
+                        Database.listofaddedtasklist.remove(task);
+                    }
+                }
+
+
+            }
+
+
 
 
         }

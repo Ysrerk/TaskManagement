@@ -12,7 +12,7 @@ public class Assignedtask  extends Task{
         assignedtasklist=list;
         assignedtasklist.add(assignedto);
         assignedtasklist.set(list.indexOf(Status.ADDED),Status.ASSIGNED);
-        Main.listofassignedtasklist.add(assignedtasklist);
+        Database.listofassignedtasklist.add(assignedtasklist);
 
     }
 

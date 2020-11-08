@@ -27,7 +27,7 @@ public class Task {
         addedtasklist.add(name);
         addedtasklist.add(dueDate);
         addedtasklist.add(Status.ADDED);
-        Main.listofaddedtasklist.add(addedtasklist);
+        Database.listofaddedtasklist.add(addedtasklist);
 
     }
 

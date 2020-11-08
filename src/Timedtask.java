@@ -17,7 +17,7 @@ public class Timedtask extends  Task{
         timedTasklist.add(startDate);
         timedTasklist.add(endDate);
         timedTasklist.set(timedTasklist.indexOf(Status.ADDED),Status.SCHEDULED);
-        Main.listofaddedtimedtasklist.add(timedTasklist);
+        Database.listofaddedtimedtasklist.add(timedTasklist);
 
 
 
