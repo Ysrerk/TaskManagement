@@ -26,19 +26,21 @@ public class Main {
 
         while (true){
             Scanner read=new Scanner(System.in);
-            System.out.println("please chooese  from menu which  type process do you want " +
-                    "0-exit"+
-                    "1-Add new Task"+
-                    "2-Add a task to Timed Task List"+
-                    "3-To list Tasks"+
-                    "4-To list Timed Tasks"+
-                    "5-To Assign task"+
-                    "6-To list  assigned task"+
-                    "7-Assigned timed task"+
-                    "8- To list assigned timed task"+
-                    "9-Sort Task according to Name"+
-                    "10-Sort Task according to Date"+
-                    "11-Delete Task");
+            System.out.println("please chooese  from menu which  type process do you want \n" +
+                    "0-exit\n"+
+                    "1-Add new Task\n"+
+                    "2-Add a task to Timed Task List\n"+
+                    "3-To list Tasks\n"+
+                    "4-To list Timed Tasks\n"+
+                    "5-To Assign task\n"+
+                    "6-To list  assigned task\n"+
+                    "7-Assigned timed task\n"+
+                    "8- To list assigned timed task\n"+
+                    "9-Sort Task according to Name\n"+
+                    "10-Sort Task according to Date\n"+
+                    "11-Delete Task\n"+
+                    "12-Update task name\n"+
+                    "13-Update Duedate\n");
             int processid= read.nextInt();
             if (processid==0){
 
@@ -213,6 +215,42 @@ public class Main {
                 }
 
 
+            }
+            else if(processid==12){
+
+
+                System.out.println("which task's name do you want to update");
+                read.nextLine();
+                int id=Integer.valueOf(read.nextLine());
+                System.out.println("Please write what do you want to update");
+                String newname=read.nextLine();
+
+                for(List<Object> task:Database.listofaddedtasklist){
+                    if (task.contains(id)){
+                        task.set(task.indexOf(task.get(1)),newname);
+                        System.out.println(id+" Task is updated.");
+                        System.out.println(task);
+                    }
+                }
+            }
+            else if(processid==13){
+
+                System.out.println("which task do you want to update due date  enter task id");
+                int id=read.nextInt();
+                System.out.println("please write new due date like this format  (yyyy-MM-dd)");
+                String newduedate=read.next();
+                newduedate+="T12:00:00";
+
+                LocalDateTime newduedaten = LocalDateTime.parse(newduedate);
+
+                for(List<Object> task:Database.listofaddedtasklist){
+                    if(task.contains(id)){
+
+                        task.set(2,newduedaten);//task.indexOf(task.get(2))
+                        System.out.println("Last value of Duedate"+task);
+
+                    }
+                }
             }
 
 
