@@ -1,4 +1,7 @@
+import org.json.simple.parser.ParseException;
+
 import java.awt.*;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -40,7 +43,9 @@ public class Main {
                     "10-Sort Task according to Date\n"+
                     "11-Delete Task\n"+
                     "12-Update task name\n"+
-                    "13-Update Duedate\n");
+                    "13-Update Duedate\n"+
+                    "14-Export Tasks by JSON.file\n"+
+                    "15-To read Tasks from JSON file");
             int processid= read.nextInt();
             if (processid==0){
 
@@ -250,6 +255,21 @@ public class Main {
                         System.out.println("Last value of Duedate"+task);
 
                     }
+                }
+            }
+            else if(processid==14){
+
+                Jsonmake js=new Jsonmake();
+
+                js.jsonmake(Database.listofaddedtasklist);
+            }
+            else if (processid==15){
+                try {
+                    Jsonread.readjson();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
             }
 
